@@ -1,12 +1,14 @@
 package com.udacity.gradle.builditbigger.free;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
+import com.example.androidjokelib.JokeActivity;
+import com.example.javajokelib.Jokes;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.udacity.gradle.builditbigger.EndpointsAsyncTask;
@@ -30,7 +32,12 @@ public class MainActivityFree extends AppCompatActivity implements JokeCompletio
     @Override
     public void onJokeReturned(String response) {
         Log.d(TAG, response);
+        Jokes joke = Jokes.jokeFromStringResponse(response);
 
+        Intent intent = new Intent(this, JokeActivity.class);
+
+        intent.putExtra(JokeActivity.JOKE_INTENT, joke);
+        startActivity(intent);
     }
 
     public void loadJoke() {
